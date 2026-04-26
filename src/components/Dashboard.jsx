@@ -101,29 +101,34 @@ const Dashboard = () => {
                       <td>{`${appointment.doctor.firstName} ${appointment.doctor.lastName}`}</td>
                       <td>{appointment.department}</td>
                       <td>
+                        {(() => {
+                          const currentStatus = (appointment.status || "pending").toLowerCase();
+                          return (
                         <select
                           className={
-                            appointment.status === "Pending"
+                            currentStatus === "pending"
                               ? "value-pending"
-                              : appointment.status === "Accepted"
+                              : currentStatus === "accept"
                               ? "value-accepted"
                               : "value-rejected"
                           }
-                          value={appointment.status}
+                          value={currentStatus}
                           onChange={(e) =>
                             handleUpdateStatus(appointment._id, e.target.value)
                           }
                         >
-                          <option value="Pending" className="value-pending">
+                          <option value="pending" className="value-pending">
                             Pending
                           </option>
-                          <option value="Accepted" className="value-accepted">
+                          <option value="accept" className="value-accepted">
                             Accepted
                           </option>
-                          <option value="Rejected" className="value-rejected">
+                          <option value="reject" className="value-rejected">
                             Rejected
                           </option>
                         </select>
+                          );
+                        })()}
                       </td>
                       <td>{appointment.hasVisited === true ? <GoCheckCircleFill className="green"/> : <AiFillCloseCircle className="red"/>}</td>
                     </tr>
