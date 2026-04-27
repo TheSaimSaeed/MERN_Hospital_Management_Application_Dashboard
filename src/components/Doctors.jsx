@@ -16,7 +16,7 @@ const Doctors = () => {
         );
         setDoctors(data.doctors);
       } catch (error) {
-        toast.error(error.response.data.message);
+        toast.error(error?.response?.data?.message || error.message);
       }
     };
     fetchDoctors();
@@ -32,9 +32,9 @@ const Doctors = () => {
         {doctors && doctors.length > 0 ? (
           doctors.map((element) => {
             return (
-              <div className="card">
+              <div className="card" key={element._id}>
                 <img
-                  src={element.docAvatar && element.docAvatar.url}
+                  src={element.DocAvatar?.url || "/docHolder.jpg"}
                   alt="doctor avatar"
                 />
                 <h4>{`${element.firstName} ${element.lastName}`}</h4>
@@ -49,7 +49,7 @@ const Doctors = () => {
                     DOB: <span>{element.dob.substring(0, 10)}</span>
                   </p>
                   <p>
-                    Department: <span>{element.doctorDepartment}</span>
+                    Department: <span>{element.DocDepartment}</span>
                   </p>
                   <p>
                     NIC: <span>{element.cnic}</span>
